@@ -6,6 +6,8 @@ namespace Rehcub.ModularizedInput
 {
     public class VectorModule : InputModule
     {
+        [SerializeField] private bool _normalizeInput;
+
         public event Action<Vector2> OnDirectionChange;
         public Vector2 Direction { get => _currentDirection; }
         private Vector2 _currentDirection;
@@ -23,7 +25,8 @@ namespace Rehcub.ModularizedInput
             }
 
             _currentDirection = context.ReadValue<Vector2>();
-            _currentDirection.Normalize();
+            if(_normalizeInput)
+                _currentDirection.Normalize();
 
             if(_currentDirection != _lastDirection)
                 OnDirectionChange?.Invoke(_currentDirection);
